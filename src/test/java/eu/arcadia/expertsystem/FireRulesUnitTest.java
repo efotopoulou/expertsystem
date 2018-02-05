@@ -3,7 +3,7 @@ package eu.arcadia.expertsystem;
 import eu.arcadia.expertsystem.facts.DoActionToComponent;
 import eu.arcadia.expertsystem.facts.MonitoredComponent;
 import eu.arcadia.expertsystem.rules.generation.RuleUtil;
-import eu.arcadia.repository.mongo.domain.GroundedServicegraph;
+//import eu.arcadia.repository.mongo.domain.GroundedServicegraph;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.drools.compiler.lang.DrlDumper;
@@ -207,25 +207,25 @@ public class FireRulesUnitTest {
 
     }
 
-    @Ignore
-    @Test
-    public void fireRulewithWindowTest() {
-        KieContainer kieContainer = KieServices.Factory.get().getKieClasspathContainer();
-    
-        GroundedServicegraph gsg = new GroundedServicegraph();
-
-        rulesEngineService.addKnowledgebasePerGroundedGraph(gsg);
-
-        MonitoredComponent monitoredComponent = new MonitoredComponent("FFFFFE1", "memory_total", 120, "1");
-
-        Logger.getLogger(FireRulesUnitTest.class
-                .getName()).debug("Action request received for: " + monitoredComponent);
-
-        DoActionToComponent doAction = rulesEngineService.getDoAction(monitoredComponent);
-
-        Logger.getLogger(FireRulesUnitTest.class
-                .getName()).debug(doAction);
-    }
+ //   @Ignore
+ //   @Test
+//    public void fireRulewithWindowTest() {
+//        KieContainer kieContainer = KieServices.Factory.get().getKieClasspathContainer();
+//    
+//        GroundedServicegraph gsg = new GroundedServicegraph();
+//
+//        rulesEngineService.addKnowledgebasePerGroundedGraph(gsg);
+//
+//        MonitoredComponent monitoredComponent = new MonitoredComponent("FFFFFE1", "memory_total", 120, "1");
+//
+//        Logger.getLogger(FireRulesUnitTest.class
+//                .getName()).debug("Action request received for: " + monitoredComponent);
+//
+//        DoActionToComponent doAction = rulesEngineService.getDoAction(monitoredComponent);
+//
+//        Logger.getLogger(FireRulesUnitTest.class
+//                .getName()).debug(doAction);
+//    }
 
     /**
      * Tests annotated with @Ignore are not executed.

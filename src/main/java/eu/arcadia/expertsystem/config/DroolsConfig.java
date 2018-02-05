@@ -34,6 +34,14 @@ import org.springframework.core.annotation.Order;
 @ComponentScan(basePackages = {"rules"})
 public class DroolsConfig {
 
+    public static final String PACKAGE_NAME = "eu.arcadia.expertsystem";
+    public static final String KIE_BASE_MODEL_PREFIX = "KnowledgeBase_";
+    public static final String KNOWLEDGEBASE_PREFIX = "kb";
+    public static final String FACT_KNOWLEDGEBASE_BASE_PREFIX = "KnowledgeBase_kb";
+    public static final String RULESPACKAGE = "rules";
+    public static final String SESSION_PREFIX = "RulesEngineSession_";
+    public static final String FACT_SESSION_PREFIX = "RulesEngineSession_kb";
+
     /**
      * Load all Knowledge bases By defining the {@link KieContainer} as a bean
      * here, we ensure that Drools will hunt out the kmodule.xml and rules on
@@ -50,28 +58,29 @@ public class DroolsConfig {
     @Bean
     public KieContainer kieContainer(RulesEngineService rulesEngineService, IGroundedServiceGraphManagement groundedServiceGraphManagement, IPolicyManagement policymanagement) {
 
-        try {
-            String current_dir = System.getProperty("user.dir");
-            FileUtils.cleanDirectory(new File(current_dir + "/rules"));
-        } catch (IOException ex) {
-            Logger.getLogger(DroolsConfig.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            String current_dir = System.getProperty("user.dir");
+//            FileUtils.cleanDirectory(new File(current_dir + "/rules"));
+//        } catch (IOException ex) {
+//            Logger.getLogger(DroolsConfig.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
-        List<GroundedServicegraph> groundedServicegraphs = groundedServiceGraphManagement.findAllGroundedServiceGraphs();
-
-        groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
-            if (groundedServicegraph.getServiceGraphPolicy() != null) {
-
-                List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
-                if (rules.size() > 0) {
-                    rulesEngineService.addKnowledgebasePerGroundedGraph(groundedServicegraph);
-                }
-
-            }
-        });
+//        List<GroundedServicegraph> groundedServicegraphs = groundedServiceGraphManagement.findAllGroundedServiceGraphs();
+//
+//        groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
+//            if (groundedServicegraph.getServiceGraphPolicy() != null) {
+//
+//                List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
+//                if (rules.size() > 0) {
+//                    rulesEngineService.addKnowledgebasePerGroundedGraph(groundedServicegraph);
+//                }
+//
+//            }
+//        });
+        rulesEngineService.addKnowledgebasePerGroundedGraphTR();
 
         rulesEngineService.createkmodule();
-        return rulesEngineService.lanchKieContainer(groundedServicegraphs);
+        return rulesEngineService.lanchKieContainerTR();
 
     }
 
@@ -79,23 +88,11 @@ public class DroolsConfig {
     @Bean
     public boolean createSessions(KieContainer kieContainer, IGroundedServiceGraphManagement groundedServiceGraphManagement, KieUtil kieUtil, IPolicyManagement policymanagement) {
 
-        List<GroundedServicegraph> groundedServicegraphs = groundedServiceGraphManagement.findAllGroundedServiceGraphs();
+        String factSessionName = "RulesEngineSession_gsgpilotTranscodingService";
 
-        groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
-            if (groundedServicegraph.getServiceGraphPolicy() != null) {
+        KieSession kieSession = kieContainer.newKieSession(factSessionName);
 
-                List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
-                if (rules.size() > 0) {
-                    String factSessionName = "RulesEngineSession_gsg" + groundedServicegraph.getId();
-
-                    KieSession kieSession = kieContainer.newKieSession(factSessionName);
-
-                    kieUtil.fireKieSession(kieSession, factSessionName);
-
-                }
-
-            }
-        });
+        kieUtil.fireKieSession(kieSession, factSessionName);
 
         return true;
 

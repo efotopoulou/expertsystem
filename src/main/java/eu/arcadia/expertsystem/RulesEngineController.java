@@ -27,7 +27,7 @@ public class RulesEngineController {
     @RequestMapping(value = "/newMonitoringMessage", method = RequestMethod.POST)
     public boolean newMonitoringMessage(@RequestBody MonitoringMessageTO tobject) {
         
-        tobject.setGsgid("5a0ae58d4f0c038e6475d049");
+        //tobject.setGsgid("5a0ae58d4f0c038e6475d049");
         tobject.setNodeid("3d020fef-cd87");
         
         rulesEngineService.createFact(tobject);
@@ -38,15 +38,6 @@ public class RulesEngineController {
 //        return new ArcadiaRestResponse(BasicResponseCode.SUCCESS, Message.CREATED, Optional.empty());
     }
     
-    @RequestMapping(value = "/addKnowledgebase", method = RequestMethod.POST)
-    public boolean addKnowledgebase(@RequestBody SGLifecycleMessageTO tobject) {
-        
-        log.info("Rest create addKnowledgebase" + tobject.getGsgid() + " with policyid " + tobject.getPolicyid());
-        rulesEngineService.addNewKnowledgebase(tobject.getGsgid(), tobject.getPolicyid());
-        
-        return true;
-        
-    }
 
 //    @RequestMapping(value = "/addKnowledgebase", method = RequestMethod.GET)
 //    public boolean addKnowledgebase(@RequestParam(required = true) String ggid, @RequestParam(required = true) String policyid) {

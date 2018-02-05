@@ -33,7 +33,7 @@ import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
     "eu.arcadia.app.config",
     "eu.arcadia.app.security.auth",
     "eu.arcadia.api.repository",
-    "eu.arcadia.repository.solr",
+    //"eu.arcadia.repository.solr",
     "eu.arcadia.repository.mongo.service",
     "eu.arcadia.repository.mongo.transferobjects",
     "eu.arcadia.expertsystem",

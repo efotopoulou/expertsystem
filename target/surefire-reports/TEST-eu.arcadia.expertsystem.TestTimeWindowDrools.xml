@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="eu.arcadia.expertsystem.TestTimeWindowDrools" time="0.31" errors="0" skipped="5">
+<testsuite tests="5" failures="0" name="eu.arcadia.expertsystem.TestTimeWindowDrools" time="0.16" errors="0" skipped="5">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_65/jre/lib/amd64"/>
@@ -59,19 +59,19 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="testNestedTopLevelAccumulate" time="0.062">
+  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="testNestedTopLevelAccumulate" time="0.032">
     <skipped/>
   </testcase>
-  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="TimeWindowDRLsCreation1" time="0.062">
+  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="TimeWindowDRLsCreation1" time="0.032">
     <skipped/>
   </testcase>
-  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="TimeWindowDRLsCreation" time="0.062">
+  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="TimeWindowDRLsCreation" time="0.032">
     <skipped/>
   </testcase>
-  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="testtimewindowdrools" time="0.062">
+  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="testtimewindowdrools" time="0.032">
     <skipped/>
   </testcase>
-  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="testTopLevelAccumulate" time="0.062">
+  <testcase classname="eu.arcadia.expertsystem.TestTimeWindowDrools" name="testTopLevelAccumulate" time="0.032">
     <skipped/>
   </testcase>
 </testsuite>

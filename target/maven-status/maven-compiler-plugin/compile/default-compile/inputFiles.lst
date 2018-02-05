@@ -13,6 +13,5 @@
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/Messaging/RuntimeActionsListener.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/rules/generation/Tags.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/RulesEngineController.java
-/home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/config/SolrContext.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/facts/RuleActionType.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/config/Neo4jConfiguration.java

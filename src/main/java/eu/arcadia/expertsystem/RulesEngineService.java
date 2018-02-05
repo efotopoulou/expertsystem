@@ -6,23 +6,23 @@
 package eu.arcadia.expertsystem;
 
 import com.google.common.io.Resources;
-import eu.arcadia.api.repository.IGroundedServiceGraphManagement;
-import eu.arcadia.api.repository.IPolicyManagement;
-import eu.arcadia.api.repository.exception.NotExistingGroundedServiceGraphException;
+//import eu.arcadia.api.repository.IGroundedServiceGraphManagement;
+//import eu.arcadia.api.repository.IPolicyManagement;
+//import eu.arcadia.api.repository.exception.NotExistingGroundedServiceGraphException;
 import eu.arcadia.expertsystem.facts.RuleActionType;
 import eu.arcadia.expertsystem.Messaging.ExpertSystemMessage;
+import static eu.arcadia.expertsystem.config.DroolsConfig.RULESPACKAGE;
 import eu.arcadia.expertsystem.facts.Action;
 import eu.arcadia.expertsystem.facts.DoActionToComponent;
 import eu.arcadia.expertsystem.facts.MonitoredComponent;
 
 import eu.arcadia.expertsystem.rules.generation.KieUtil;
-import eu.arcadia.expertsystem.rules.generation.RuleUtil;
-import eu.arcadia.repository.mongo.domain.GroundedServicegraph;
-import eu.arcadia.repository.mongo.domain.RuleExpression;
 import eu.arcadia.repository.mongo.transferobjects.MonitoringMessageTO;
+///import eu.arcadia.repository.mongo.domain.GroundedServicegraph;
+//import eu.arcadia.repository.mongo.domain.RuleExpression;
+//import eu.arcadia.repository.mongo.transferobjects.MonitoringMessageTO;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,12 +31,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.jms.Message;
 import javax.jms.Topic;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -49,17 +49,7 @@ import org.kie.api.runtime.ObjectFilter;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.drools.compiler.lang.DrlDumper;
-import org.drools.compiler.lang.api.CEDescrBuilder;
-import org.drools.compiler.lang.api.DescrFactory;
-import org.drools.compiler.lang.api.PackageDescrBuilder;
-import org.drools.compiler.lang.api.RuleDescrBuilder;
-import org.drools.compiler.lang.descr.AndDescr;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.kie.api.KieBaseConfiguration;
 import org.kie.api.builder.ReleaseId;
-import org.kie.api.builder.model.KieSessionModel;
 import org.kie.api.conf.EventProcessingOption;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
@@ -88,11 +78,11 @@ public class RulesEngineService {
     @Autowired
     KieContainer kieContainer;
 
-    @Autowired
-    IPolicyManagement policymanagement;
+//    @Autowired
+//    IPolicyManagement policymanagement;
 
-    @Autowired
-    IGroundedServiceGraphManagement groundedServiceGraphManagement;
+//    @Autowired
+//    IGroundedServiceGraphManagement groundedServiceGraphManagement;
 
     private final KieUtil kieUtil;
 
@@ -104,11 +94,14 @@ public class RulesEngineService {
 
     private Object packageDescr;
 
+//    @Value("${rules.path}")
+//    private String rulespath;
+
     @Autowired
-    public RulesEngineService(IPolicyManagement pm, IGroundedServiceGraphManagement gsgm, KieUtil kieUtil) {
+    public RulesEngineService(KieUtil kieUtil) {
         logger.info("Rule Engine Session initializing...");
-        policymanagement = pm;
-        groundedServiceGraphManagement = gsgm;
+        //policymanagement = pm;
+        //groundedServiceGraphManagement = gsgm;
         this.kieServices = KieServices.Factory.get();
         this.kieFileSystem = kieServices.newKieFileSystem();
         this.kieModuleModel = kieServices.newKieModuleModel();
@@ -119,9 +112,29 @@ public class RulesEngineService {
     /*
      Add a new knowledge base & session & corresponding rules so as to update kieModule
      */
-    public void addKnowledgebasePerGroundedGraph(GroundedServicegraph groundedServicegraph) {
+//    public void addKnowledgebasePerGroundedGraph(GroundedServicegraph groundedServicegraph) {
+//
+//        String knowledgebasename = "gsg" + groundedServicegraph.getId();
+//
+//        System.out.println("knowledgebasename" + knowledgebasename);
+//        KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setDefault(true)
+//                .setEventProcessingMode(EventProcessingOption.STREAM);
+//
+//        //KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setEventProcessingMode(EventProcessingOption.STREAM);
+//        kieBaseModel1.addPackage(rulesPackage + "." + knowledgebasename);
+//
+//        String factSessionName = "RulesEngineSession_" + knowledgebasename;
+//        kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
+//        //to check
+//        //.setType(KieSessionModel.KieSessionType.STATEFUL);
+//
+//    }
+    /*
+     Add a new knowledge base & session & corresponding rules so as to update kieModule
+     */
+    public void addKnowledgebasePerGroundedGraphTR() {
 
-        String knowledgebasename = "gsg" + groundedServicegraph.getId();
+        String knowledgebasename = "gsgpilotTranscodingService";
 
         System.out.println("knowledgebasename" + knowledgebasename);
         KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setDefault(true)
@@ -132,81 +145,8 @@ public class RulesEngineService {
 
         String factSessionName = "RulesEngineSession_" + knowledgebasename;
         kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
-                //to check
-                //.setType(KieSessionModel.KieSessionType.STATEFUL);
-
-    }
-
-    /*
-     Add a new knowledge base & session & corresponding rules so as to update kieModule
-     */
-    public void addNewKnowledgebase(String groundedServicegraphid, String policyid) {
-
-        try {
-
-            Collection<String> kiebases = kieContainer.getKieBaseNames();
-            String factKnowledgebase = "ArcadiaGSGKnowledgeBase_gsg" + groundedServicegraphid;
-
-            if ("null".equals(policyid) || policyid == null) {
-                logger.log(java.util.logging.Level.WARNING, "Grounded Service graph is deploed with none policy assigned");
-                return;
-            }
-
-            if (kiebases.contains(factKnowledgebase)) {
-                logger.log(java.util.logging.Level.WARNING, "Knowledge base {0} already added", factKnowledgebase);
-                return;
-            }
-
-            List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(policyid);
-            if (rules == null || rules.size() == 0) {
-                logger.log(java.util.logging.Level.WARNING, "Grounded Service graph is deploed with policy that has no rules");
-                return;
-            }
-
-            GroundedServicegraph groundedServicegraph = (GroundedServicegraph) groundedServiceGraphManagement.getGroundedServicegraph(groundedServicegraphid);
-            String knowledgebasename = "gsg" + groundedServicegraphid;
-
-            System.out.println("knowledgebasename" + knowledgebasename);
-            KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setDefault(true).setEventProcessingMode(EventProcessingOption.STREAM);
-
-            kieBaseModel1.addPackage(rulesPackage + "." + knowledgebasename);
-
-            String factSessionName = "RulesEngineSession_" + knowledgebasename;
-            kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
-
-            ///
-            Double newversion = Double.parseDouble(releaseId.getVersion()) + 0.1;
-            //System.out.println("newversion" + newversion);
-            ReleaseId releaseId2 = kieServices.newReleaseId("eu.arcadia", "expert-system", newversion.toString());
-
-            KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
-
-            kieFileSystem.generateAndWritePomXML(releaseId2);
-
-            kieFileSystem.writeKModuleXML(kieModuleModel.toXML());
-            logger.log(java.util.logging.Level.INFO, "kieModuleModel--ToXML\n{0}", kieModuleModel.toXML());
-
-            //List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(policyid);
-            //if (rules != null) {
-            addPolicyRules(groundedServicegraph, rules);
-            // }
-
-            kieBuilder.buildAll();
-
-            if (kieBuilder.getResults()
-                    .hasMessages(Level.ERROR)) {
-                throw new RuntimeException("Build Errors:\n" + kieBuilder.getResults().toString());
-            }
-
-            kieContainer = kieServices.newKieContainer(releaseId2);
-
-            if (groundedServicegraph.getServiceGraphPolicy() != null) {
-                KieSession kieSession = kieContainer.newKieSession(factSessionName);
-                kieUtil.fireKieSession(kieSession, factSessionName);
-            }
-        } catch (NotExistingGroundedServiceGraphException ex) {
-            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        //to check
+        //.setType(KieSessionModel.KieSessionType.STATEFUL);
 
     }
 
@@ -268,7 +208,47 @@ public class RulesEngineService {
 //        }
     }
 
-    public KieContainer lanchKieContainer(List<GroundedServicegraph> groundedServicegraphs) {
+//    public KieContainer lanchKieContainer(List<GroundedServicegraph> groundedServicegraphs) {
+//
+//        Double newversion = Double.parseDouble(releaseId.getVersion()) + 0.1;
+//        //System.out.println("newversion" + newversion);
+//        ReleaseId releaseId2 = kieServices.newReleaseId("eu.arcadia", "expert-system", newversion.toString());
+//
+//        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
+//
+//        kieFileSystem.generateAndWritePomXML(releaseId2);
+//
+//        kieFileSystem.writeKModuleXML(kieModuleModel.toXML());
+//        logger.log(java.util.logging.Level.INFO, "kieModuleModel--ToXML\n{0}", kieModuleModel.toXML());
+//
+//        if (groundedServicegraphs != null) {
+//
+//            groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
+//
+//                if (groundedServicegraph.getServiceGraphPolicy() != null) {
+//                    List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
+//                    if (rules.size() > 0) {
+//                        addPolicyRules(groundedServicegraph, rules);
+//                    }
+//                }
+//
+//            });
+//
+//        }
+//
+//        kieBuilder.buildAll();
+//
+//        if (kieBuilder.getResults()
+//                .hasMessages(Level.ERROR)) {
+//            throw new RuntimeException("Build Errors:\n" + kieBuilder.getResults().toString());
+//        }
+//
+//        kieContainer = kieServices.newKieContainer(releaseId2);
+//
+//        return kieContainer;
+//
+//    }
+    public KieContainer lanchKieContainerTR() {
 
         Double newversion = Double.parseDouble(releaseId.getVersion()) + 0.1;
         //System.out.println("newversion" + newversion);
@@ -281,20 +261,21 @@ public class RulesEngineService {
         kieFileSystem.writeKModuleXML(kieModuleModel.toXML());
         logger.log(java.util.logging.Level.INFO, "kieModuleModel--ToXML\n{0}", kieModuleModel.toXML());
 
-        if (groundedServicegraphs != null) {
-
-            groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
-
-                if (groundedServicegraph.getServiceGraphPolicy() != null) {
-                    List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
-                    if (rules.size() > 0) {
-                        addPolicyRules(groundedServicegraph, rules);
-                    }
-                }
-
-            });
-
-        }
+//        if (groundedServicegraphs != null) {
+//
+//            groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
+//
+//                if (groundedServicegraph.getServiceGraphPolicy() != null) {
+//                    List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
+//                    if (rules.size() > 0) {
+//                        addPolicyRules(groundedServicegraph, rules);
+//                    }
+//                }
+//
+//            });
+//
+//        }
+        this.loadRulesFromFile();
 
         kieBuilder.buildAll();
 
@@ -309,110 +290,137 @@ public class RulesEngineService {
 
     }
 
-    //Add all rules from policies declared by the authentication request
-    public void addPolicyRules(GroundedServicegraph groundedServicegraph, List<RuleExpression> rules) {
-        String knowledgebasename = "gsg" + groundedServicegraph.getId();
-
-        String drlPath = rulesPath + "/" + knowledgebasename + "/" + knowledgebasename + ".drl";
-        String drlPath4deployment = "rules" + "/" + knowledgebasename + "/" + knowledgebasename + ".drl";
-        try {
-
-            PackageDescrBuilder packageDescrBuilder = DescrFactory.newPackage();
-            packageDescrBuilder
-                    .name(rulesPackage + "." + knowledgebasename)
-                    .newImport().target("eu.arcadia.expertsystem.facts.*").end()
-                    .newDeclare().type().name("MonitoredComponent").newAnnotation("role").value("event").end()
-                    .newAnnotation("expires").value(FACTS_EXPIRATION).end().end();
-
-            for (RuleExpression rule : rules) {
-
-                RuleDescrBuilder droolrule = packageDescrBuilder
-                        .newRule()
-                        .name(rule.getId());
-
-                CEDescrBuilder<RuleDescrBuilder, AndDescr> when = droolrule.lhs();
-
-                JSONObject jsonrulewhen = new JSONObject(rule.getRules());
-
-                when = RuleUtil.convertToRule(when, jsonrulewhen, "AND",rule.getTimeframe());
-
-                JSONArray jsonactionArray = new JSONArray(rule.getActions());
-
-                String rhs_actions = "";
-                for (Iterator<Object> it = jsonactionArray.iterator(); it.hasNext();) {
-                    JSONObject jsonaction = (JSONObject) it.next();
-//                    System.out.println("ActionType" + jsonaction.get("ActionType"));
-//                    System.out.println("Component" + jsonaction.get("Component"));
-//                    System.out.println("Action" + jsonaction.get("Action"));
-//                    System.out.println("Value" + jsonaction.get("Value"));
-
-                    String componentName = jsonaction.get("Component").toString();
-                    String nodeid = componentName.substring(componentName.indexOf("(") + 1, componentName.indexOf(")"));
-
-                    String actionType = mapActionType(jsonaction.get("ActionType").toString());
-
-                    Action action = new Action(groundedServicegraph.getId(), nodeid, RuleActionType.valueOf(actionType), jsonaction.get("Value").toString(), jsonaction.get("Action").toString());
-                    //System.out.println("Action to add to drool when: " + action.toString());
-
-                    //System.out.println("action-->" + action.toString());
-                    //This is the good
-                    rhs_actions += "    insertLogical( new Action(\"" + groundedServicegraph.getId() + "\"," + "\"" + nodeid + "\"" + ",RuleActionType." + RuleActionType.valueOf(actionType) + ",\"" + jsonaction.get("Value").toString() + "\",\"" + jsonaction.get("Action").toString() + "\")); \n";
-                    //rhs_actions += "    System.out.println(\"footestttehhh\"+$tot0); \n";
-                    //rhs_actions += "    System.out.println(\"Hello Word\"); \n";
-
-                    //droolrule.rhs("    insertLogical( new Action(\"" + groundedServicegraph.getId() + "\",\"" + cid + "\"," + "\"tobedefined\"" + ",ActionType." + ActionType.ARCADIA_VIRTUAL_FUNCTION + ",\"" + jsonaction.get("Value").toString() + "\",\"" + jsonaction.get("Action").toString() + "\"));");
-                }
-
-                droolrule.rhs(rhs_actions);
-                //.rhs("System.out.println(\"footestttehhh\"+$tot0);")
-                //.rhs("    insertLogical( new DoActionToComponent(PermissionType.ALLOW));")
-                droolrule.end();
-
-            }
-
-            String created_rules = new DrlDumper().dump(packageDescrBuilder.getDescr());
-            created_rules = created_rules.replace("|", "over");
-            System.out.println(created_rules);
-
-            String current_dir = System.getProperty("user.dir");
-
-            //place this if you deploy with sprint-boot:run
-            //Path policyPackagePath = Paths.get(rulesPath + "/" + knowledgebasename);
-            //place this if you deploy with java -jar
-            Path policyPackagePath = Paths.get(current_dir + "/" + rulesPackage + "/" + knowledgebasename);
-
-            // Create new policy rules file
-            //logger.log(java.util.logging.Level.INFO, "-----------RULES for policy {0}-----------", knowledgebasename);
-            //logger.info(created_rules);
-            String data = created_rules;
-
-            Files.createDirectories(policyPackagePath);
-
-            //place this if you deploy with sprint-boot:run
-            //FileOutputStream out = new FileOutputStream(drlPath);
-            //out.write(data.getBytes());
-            //out.close();
-            //place this if you deploy with java -jar
-            FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
-            out.write(data.getBytes());
-            out.close();
-
-            //place this if you deploy with sprint-boot:run    
-            //CompositeClassLoader classLoader = ClassLoaderUtil.getClassLoader(new ClassLoader[]{Thread.currentThread().getContextClassLoader()}, getClass(), false);
-            //File file = new File(classLoader.getResource("rules/" + knowledgebasename + "/" + knowledgebasename + ".drl").getFile());
-            //Resource resource = kieServices.getResources().newFileSystemResource(file).setResourceType(ResourceType.DRL);
-            //place this if you deploy with sprint-boot:run            
-            //kieFileSystem.write("src/main/resources/" + rulesPackage + "/" + knowledgebasename + "/" + knowledgebasename + ".drl", resource);
-            //place this if you deploy with java -jar
-            kieFileSystem.write(ResourceFactory.newFileResource(current_dir + "/" + rulesPackage + "/" + knowledgebasename + "/" + knowledgebasename + ".drl"));
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }
-
+//    //Add all rules from policies declared by the authentication request
+//    public void addPolicyRules(GroundedServicegraph groundedServicegraph, List<RuleExpression> rules) {
+//        String knowledgebasename = "gsg" + groundedServicegraph.getId();
+//
+//        String drlPath = rulesPath + "/" + knowledgebasename + "/" + knowledgebasename + ".drl";
+//        String drlPath4deployment = "rules" + "/" + knowledgebasename + "/" + knowledgebasename + ".drl";
+//        try {
+//
+//            PackageDescrBuilder packageDescrBuilder = DescrFactory.newPackage();
+//            packageDescrBuilder
+//                    .name(rulesPackage + "." + knowledgebasename)
+//                    .newImport().target("eu.arcadia.expertsystem.facts.*").end()
+//                    .newDeclare().type().name("MonitoredComponent").newAnnotation("role").value("event").end()
+//                    .newAnnotation("expires").value(FACTS_EXPIRATION).end().end();
+//
+//            for (RuleExpression rule : rules) {
+//
+//                RuleDescrBuilder droolrule = packageDescrBuilder
+//                        .newRule()
+//                        .name(rule.getId());
+//
+//                CEDescrBuilder<RuleDescrBuilder, AndDescr> when = droolrule.lhs();
+//
+//                JSONObject jsonrulewhen = new JSONObject(rule.getRules());
+//
+//                when = RuleUtil.convertToRule(when, jsonrulewhen, "AND", rule.getTimeframe());
+//
+//                JSONArray jsonactionArray = new JSONArray(rule.getActions());
+//
+//                String rhs_actions = "";
+//                for (Iterator<Object> it = jsonactionArray.iterator(); it.hasNext();) {
+//                    JSONObject jsonaction = (JSONObject) it.next();
+////                    System.out.println("ActionType" + jsonaction.get("ActionType"));
+////                    System.out.println("Component" + jsonaction.get("Component"));
+////                    System.out.println("Action" + jsonaction.get("Action"));
+////                    System.out.println("Value" + jsonaction.get("Value"));
+//
+//                    String componentName = jsonaction.get("Component").toString();
+//                    String nodeid = componentName.substring(componentName.indexOf("(") + 1, componentName.indexOf(")"));
+//
+//                    String actionType = mapActionType(jsonaction.get("ActionType").toString());
+//
+//                    Action action = new Action(groundedServicegraph.getId(), nodeid, RuleActionType.valueOf(actionType), jsonaction.get("Value").toString(), jsonaction.get("Action").toString());
+//                    //System.out.println("Action to add to drool when: " + action.toString());
+//
+//                    //System.out.println("action-->" + action.toString());
+//                    //This is the good
+//                    rhs_actions += "    insertLogical( new Action(\"" + groundedServicegraph.getId() + "\"," + "\"" + nodeid + "\"" + ",RuleActionType." + RuleActionType.valueOf(actionType) + ",\"" + jsonaction.get("Value").toString() + "\",\"" + jsonaction.get("Action").toString() + "\")); \n";
+//                    //rhs_actions += "    System.out.println(\"footestttehhh\"+$tot0); \n";
+//                    //rhs_actions += "    System.out.println(\"Hello Word\"); \n";
+//
+//                    //droolrule.rhs("    insertLogical( new Action(\"" + groundedServicegraph.getId() + "\",\"" + cid + "\"," + "\"tobedefined\"" + ",ActionType." + ActionType.ARCADIA_VIRTUAL_FUNCTION + ",\"" + jsonaction.get("Value").toString() + "\",\"" + jsonaction.get("Action").toString() + "\"));");
+//                }
+//
+//                droolrule.rhs(rhs_actions);
+//                //.rhs("System.out.println(\"footestttehhh\"+$tot0);")
+//                //.rhs("    insertLogical( new DoActionToComponent(PermissionType.ALLOW));")
+//                droolrule.end();
+//
+//            }
+//
+//            String created_rules = new DrlDumper().dump(packageDescrBuilder.getDescr());
+//            created_rules = created_rules.replace("|", "over");
+//            System.out.println(created_rules);
+//
+//            String current_dir = System.getProperty("user.dir");
+//
+//            //place this if you deploy with sprint-boot:run
+//            //Path policyPackagePath = Paths.get(rulesPath + "/" + knowledgebasename);
+//            //place this if you deploy with java -jar
+//            Path policyPackagePath = Paths.get(current_dir + "/" + rulesPackage + "/" + knowledgebasename);
+//
+//            // Create new policy rules file
+//            //logger.log(java.util.logging.Level.INFO, "-----------RULES for policy {0}-----------", knowledgebasename);
+//            //logger.info(created_rules);
+//            String data = created_rules;
+//
+//            Files.createDirectories(policyPackagePath);
+//
+//            //place this if you deploy with sprint-boot:run
+//            //FileOutputStream out = new FileOutputStream(drlPath);
+//            //out.write(data.getBytes());
+//            //out.close();
+//            //place this if you deploy with java -jar
+//            FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
+//            out.write(data.getBytes());
+//            out.close();
+//
+//            //place this if you deploy with sprint-boot:run    
+//            //CompositeClassLoader classLoader = ClassLoaderUtil.getClassLoader(new ClassLoader[]{Thread.currentThread().getContextClassLoader()}, getClass(), false);
+//            //File file = new File(classLoader.getResource("rules/" + knowledgebasename + "/" + knowledgebasename + ".drl").getFile());
+//            //Resource resource = kieServices.getResources().newFileSystemResource(file).setResourceType(ResourceType.DRL);
+//            //place this if you deploy with sprint-boot:run            
+//            //kieFileSystem.write("src/main/resources/" + rulesPackage + "/" + knowledgebasename + "/" + knowledgebasename + ".drl", resource);
+//            //place this if you deploy with java -jar
+//            kieFileSystem.write(ResourceFactory.newFileResource(current_dir + "/" + rulesPackage + "/" + knowledgebasename + "/" + knowledgebasename + ".drl"));
+//
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//    }
+            //Add all rules from policies declared by the authentication request
+//    public void addPolicyRulesTR() {
+//        String knowledgebasename = "gsgpilotTranscodingService";
+//
+//        String drlPath = rulesPath + "/" + knowledgebasename + "/" + knowledgebasename + ".drl";
+//        String drlPath4deployment = "rules" + "/" + knowledgebasename + "/" + knowledgebasename + ".drl";
+//        try {
+//
+//            String current_dir = System.getProperty("user.dir");
+//             Path policyPackagePath = Paths.get(current_dir + "/" + rulesPackage + "/" + knowledgebasename);
+//            String data = created_rules;
+//
+//            Files.createDirectories(policyPackagePath);
+//
+//            //place this if you deploy with java -jar
+//            FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
+//            out.write(data.getBytes());
+//            out.close();
+//
+//          //place this if you deploy with java -jar
+//            kieFileSystem.write(ResourceFactory.newFileResource(current_dir + "/" + rulesPackage + "/" + knowledgebasename + "/" + knowledgebasename + ".drl"));
+//
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//    }
     protected void createFact(MonitoringMessageTO monitoringMessageTO) {
 
         //logger.info("i have a new monitoring message" + monitoringMessageTO.toString());
@@ -434,8 +442,8 @@ public class RulesEngineService {
         //logger.info("monitoringStream "+monitoringStream.getEntryPointId() + monitoringStream.getFactCount() +monitoringStream.getObjects().size());
 
         System.out.println("Ιnsert monitoredComponent to session with nodeid " + monitoringMessageTO.getNodeid() + " metric name " + monitoringMessageTO.getMetricName() + " , value = " + monitoringMessageTO.getMetricValue() + " , and gsgid " + monitoringMessageTO.getGsgid());
-        MonitoredComponent monitoredComponent = new MonitoredComponent(monitoringMessageTO.getNodeid(), 
-                monitoringMessageTO.getMetricName(), 
+        MonitoredComponent monitoredComponent = new MonitoredComponent(monitoringMessageTO.getNodeid(),
+                monitoringMessageTO.getMetricName(),
                 monitoringMessageTO.getMetricValue(),
                 monitoringMessageTO.getGsgid());
 
@@ -448,11 +456,11 @@ public class RulesEngineService {
 
         if (doactions.size() > 0) {
 
-            try {
-                GroundedServicegraph gsg = (GroundedServicegraph) groundedServiceGraphManagement.getGroundedServicegraph(gsgid);
-                String gsgPropietary = gsg.getUsername();
+            //try {
+                //GroundedServicegraph gsg = (GroundedServicegraph) groundedServiceGraphManagement.getGroundedServicegraph(gsgid);
+                //String gsgPropietary = gsg.getUsername();
 
-                String servicegraphname = gsg.getServicegraph().getName();
+                //String servicegraphname = gsg.getServicegraph().getName();
 
                 for (Action doaction : doactions) {
 
@@ -468,9 +476,9 @@ public class RulesEngineService {
                         expertSystemMessage.setValue(String.valueOf(doaction.getValue()));
 
                         expertSystemMessage.setNodeid(doaction.getNodeid());
-                        expertSystemMessage.setGname(servicegraphname);
+                        expertSystemMessage.setGname("pilotTranscodingService");
 
-                        expertSystemMessage.setUsername(gsgPropietary);
+                        expertSystemMessage.setUsername("arcadia");
 
                         Message m = session.createObjectMessage(expertSystemMessage);
                         m.setStringProperty("context", "runtime_action");
@@ -479,9 +487,9 @@ public class RulesEngineService {
                     });
 
                 }
-            } catch (NotExistingGroundedServiceGraphException ex) {
-                Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
+//            } catch (NotExistingGroundedServiceGraphException ex) {
+//                Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            }
 
         }
     }
@@ -538,7 +546,6 @@ public class RulesEngineService {
             msg += "    " + kieSession.getObject(handle) + "\n";
         }
         System.out.println(msg);
-        
 
         EntryPoint monitoringstream = kieSession.getEntryPoint("MonitoringStream");
         Collection<FactHandle> allHandles1 = monitoringstream.getFactHandles();
@@ -548,7 +555,7 @@ public class RulesEngineService {
             msg1 += "    " + monitoringstream.getObject(handle) + "\n";
         }
         System.out.println(msg1);
-        
+
     }
 
     private Resource getResource(KieServices kieServices, String resourcePath) {
@@ -687,6 +694,46 @@ public class RulesEngineService {
         }
 
         return doaction;
+    }
+
+    private void loadRulesFromFile() {
+        logger.info("Loading Rules from File to production memory");
+        String knowledgebasename = "gsgpilotTranscodingService";
+        String drlPath4deployment = "/rules/gsgpilotTranscodingService/gsgpilotTranscodingService.drl";
+        try {
+            String current_dir = System.getProperty("user.dir");
+            Path policyPackagePath = Paths.get(current_dir + "/" + RULESPACKAGE + "/" + knowledgebasename);
+            String data = "";
+            //1st add default rules
+            data += getRulesFromFile();
+
+            logger.info("dataaaaaaa" + data);
+
+            Files.createDirectories(policyPackagePath);
+            FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
+            out.write(data.getBytes());
+            out.close();
+            logger.info("Writing rules at: " + current_dir + "/" + RULESPACKAGE + "/" + knowledgebasename + "/" + knowledgebasename + ".drl");
+            kieFileSystem.write(ResourceFactory.newFileResource(current_dir + "/" + RULESPACKAGE + "/" + knowledgebasename + "/" + knowledgebasename + ".drl"));
+        } catch (Exception ex) {
+            logger.warning("Error during the creation of production memory:" + ex.getMessage());
+        }
+    }//EoM 
+
+    private String getRulesFromFile() {
+
+        String ret = "";
+        try {
+            
+            InputStream inputstream = this.getClass().getResourceAsStream("/rules/gsgpilotTranscodingService/gsgpilotTranscodingService.drl");
+            ret = IOUtils.toString(inputstream, "UTF-8");
+            logger.info("ret"+ret);
+
+        } //EoM  
+        catch (IOException ex) {
+            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        return ret;
     }
 
 }//EoC
