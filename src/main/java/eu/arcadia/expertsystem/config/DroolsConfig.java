@@ -50,48 +50,23 @@ public class DroolsConfig {
      *
      *
      * @param rulesEngineService
-     * @param groundedServiceGraphManagement
-     * @param policymanagement
      * @return
      */
     @Order(1)
     @Bean
-    public KieContainer kieContainer(RulesEngineService rulesEngineService, IGroundedServiceGraphManagement groundedServiceGraphManagement, IPolicyManagement policymanagement) {
+    public KieContainer kieContainer(RulesEngineService rulesEngineService) {
 
-//        try {
-//            String current_dir = System.getProperty("user.dir");
-//            FileUtils.cleanDirectory(new File(current_dir + "/rules"));
-//        } catch (IOException ex) {
-//            Logger.getLogger(DroolsConfig.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
-//        List<GroundedServicegraph> groundedServicegraphs = groundedServiceGraphManagement.findAllGroundedServiceGraphs();
-//
-//        groundedServicegraphs.stream().forEach((groundedServicegraph) -> {
-//            if (groundedServicegraph.getServiceGraphPolicy() != null) {
-//
-//                List<RuleExpression> rules = policymanagement.findAllGraphPoliciesRules(groundedServicegraph.getServiceGraphPolicy().getId());
-//                if (rules.size() > 0) {
-//                    rulesEngineService.addKnowledgebasePerGroundedGraph(groundedServicegraph);
-//                }
-//
-//            }
-//        });
         rulesEngineService.addKnowledgebasePerGroundedGraphTR();
-
-        rulesEngineService.createkmodule();
         return rulesEngineService.lanchKieContainerTR();
 
     }
 
     @Order(2)
     @Bean
-    public boolean createSessions(KieContainer kieContainer, IGroundedServiceGraphManagement groundedServiceGraphManagement, KieUtil kieUtil, IPolicyManagement policymanagement) {
+    public boolean createSessions(KieContainer kieContainer, KieUtil kieUtil) {
 
         String factSessionName = "RulesEngineSession_gsgpilotTranscodingService";
-
         KieSession kieSession = kieContainer.newKieSession(factSessionName);
-
         kieUtil.fireKieSession(kieSession, factSessionName);
 
         return true;

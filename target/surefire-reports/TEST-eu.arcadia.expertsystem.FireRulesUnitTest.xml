@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="eu.arcadia.expertsystem.FireRulesUnitTest" time="0.018" errors="0" skipped="2">
+<testsuite tests="2" failures="0" name="eu.arcadia.expertsystem.FireRulesUnitTest" time="0.016" errors="0" skipped="2">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_65/jre/lib/amd64"/>
@@ -59,27 +59,27 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="eu.arcadia.expertsystem.FireRulesUnitTest" name="testTranslationRuleToDRL" time="0.009">
+  <testcase classname="eu.arcadia.expertsystem.FireRulesUnitTest" name="testTranslationRuleToDRL" time="0.008">
     <skipped/>
-    <system-out>01:01:17.943 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class eu.arcadia.expertsystem.FireRulesUnitTest]
-01:01:17.943 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-01:01:17.943 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-01:01:17.944 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [eu.arcadia.expertsystem.FireRulesUnitTest] from class [org.springframework.test.context.support.DefaultTestContextBootstrapper]
-01:01:17.945 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - Found explicit ContextLoader class [org.springframework.boot.test.SpringApplicationContextLoader] for context configuration attributes [ContextConfigurationAttributes@6dde5c8c declaringClass = &apos;eu.arcadia.expertsystem.FireRulesUnitTest&apos;, classes = &apos;{class eu.arcadia.expertsystem.RulesEngineApp}&apos;, locations = &apos;{}&apos;, inheritLocations = true, initializers = &apos;{}&apos;, inheritInitializers = true, name = [null], contextLoaderClass = &apos;org.springframework.boot.test.SpringApplicationContextLoader&apos;]
-01:01:17.946 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.FireRulesUnitTest]: class path resource [eu/arcadia/expertsystem/FireRulesUnitTest-context.xml] does not exist
-01:01:17.946 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.FireRulesUnitTest]: class path resource [eu/arcadia/expertsystem/FireRulesUnitTestContext.groovy] does not exist
-01:01:17.946 [main] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [eu.arcadia.expertsystem.FireRulesUnitTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-01:01:17.946 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an &apos;annotation declaring class&apos; for annotation type [org.springframework.test.context.ActiveProfiles] and class [eu.arcadia.expertsystem.FireRulesUnitTest]
-01:01:17.947 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - @TestExecutionListeners is not present for class [eu.arcadia.expertsystem.FireRulesUnitTest]: using defaults.
-01:01:17.948 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
-01:01:17.949 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@16022d9d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7e9a5fbe, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@44a3ec6b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@71623278, org.springframework.test.context.transaction.TransactionalTestExecutionListener@768b970c, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5a4041cc]
-01:01:17.949 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.FireRulesUnitTest]
-01:01:17.949 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.FireRulesUnitTest]
-01:01:17.949 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.FireRulesUnitTest]
-01:01:17.949 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.FireRulesUnitTest]
+    <system-out>01:21:29.405 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class eu.arcadia.expertsystem.FireRulesUnitTest]
+01:21:29.405 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+01:21:29.405 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+01:21:29.406 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [eu.arcadia.expertsystem.FireRulesUnitTest] from class [org.springframework.test.context.support.DefaultTestContextBootstrapper]
+01:21:29.407 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - Found explicit ContextLoader class [org.springframework.boot.test.SpringApplicationContextLoader] for context configuration attributes [ContextConfigurationAttributes@6dde5c8c declaringClass = &apos;eu.arcadia.expertsystem.FireRulesUnitTest&apos;, classes = &apos;{class eu.arcadia.expertsystem.RulesEngineApp}&apos;, locations = &apos;{}&apos;, inheritLocations = true, initializers = &apos;{}&apos;, inheritInitializers = true, name = [null], contextLoaderClass = &apos;org.springframework.boot.test.SpringApplicationContextLoader&apos;]
+01:21:29.408 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.FireRulesUnitTest]: class path resource [eu/arcadia/expertsystem/FireRulesUnitTest-context.xml] does not exist
+01:21:29.408 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.FireRulesUnitTest]: class path resource [eu/arcadia/expertsystem/FireRulesUnitTestContext.groovy] does not exist
+01:21:29.408 [main] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [eu.arcadia.expertsystem.FireRulesUnitTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+01:21:29.408 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an &apos;annotation declaring class&apos; for annotation type [org.springframework.test.context.ActiveProfiles] and class [eu.arcadia.expertsystem.FireRulesUnitTest]
+01:21:29.408 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - @TestExecutionListeners is not present for class [eu.arcadia.expertsystem.FireRulesUnitTest]: using defaults.
+01:21:29.410 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+01:21:29.410 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@16022d9d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7e9a5fbe, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@44a3ec6b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@71623278, org.springframework.test.context.transaction.TransactionalTestExecutionListener@768b970c, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5a4041cc]
+01:21:29.411 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.FireRulesUnitTest]
+01:21:29.411 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.FireRulesUnitTest]
+01:21:29.411 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.FireRulesUnitTest]
+01:21:29.411 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.FireRulesUnitTest]
 </system-out>
   </testcase>
-  <testcase classname="eu.arcadia.expertsystem.FireRulesUnitTest" name="ignoredTest" time="0.009">
+  <testcase classname="eu.arcadia.expertsystem.FireRulesUnitTest" name="ignoredTest" time="0.008">
     <skipped/>
   </testcase>
 </testsuite>

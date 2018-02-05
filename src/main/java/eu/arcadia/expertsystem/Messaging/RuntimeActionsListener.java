@@ -1,19 +1,12 @@
 package eu.arcadia.expertsystem.Messaging;
 
-import eu.arcadia.api.repository.IActivityManagement;
-import eu.arcadia.api.repository.IIaaSManagementService;
 import eu.arcadia.expertsystem.facts.RuleActionType;
 import eu.arcadia.expertsystem.RulesEngineApp;
-import eu.arcadia.repository.mongo.domain.Activity;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import eu.arcadia.repository.mongo.transferobjects.ExpertSystemMessageTO;
 import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.annotation.JmsListener;
@@ -22,12 +15,6 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class RuntimeActionsListener {
 
-//    @Autowired
-//    IActivityManagement activityManagement;
-//    @Autowired
-//    IIaaSManagementService iIaaSManagementService;
-    @Value("${iaasregistration.url}")
-    private String IAAS_REGISTRATION_URL;
 
     @Value("${transcodingserver.url}")
     private String TRANSCODING_SERVER_URL;

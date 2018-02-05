@@ -1,4 +1,5 @@
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/facts/Message.java
+/home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/transferobjects/MonitoringMessageTO.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/facts/DoActionToComponent.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/facts/MonitoredComponent.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/RulesEngineService.java

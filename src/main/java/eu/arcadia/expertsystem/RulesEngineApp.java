@@ -30,9 +30,9 @@ import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
  */
 @ComponentScan({
     //Contains all the security configuration regarding the Arcadia Framework 
-    "eu.arcadia.app.config",
-    "eu.arcadia.app.security.auth",
-    "eu.arcadia.api.repository",
+    //"eu.arcadia.app.config",
+    //"eu.arcadia.app.security.auth",
+    //"eu.arcadia.api.repository",
     //"eu.arcadia.repository.solr",
     "eu.arcadia.repository.mongo.service",
     "eu.arcadia.repository.mongo.transferobjects",

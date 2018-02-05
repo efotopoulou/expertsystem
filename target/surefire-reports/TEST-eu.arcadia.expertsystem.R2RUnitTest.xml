@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="eu.arcadia.expertsystem.R2RUnitTest" time="0.28" errors="0" skipped="2">
+<testsuite tests="2" failures="0" name="eu.arcadia.expertsystem.R2RUnitTest" time="0.3" errors="0" skipped="2">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_65/jre/lib/amd64"/>
@@ -59,27 +59,27 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="eu.arcadia.expertsystem.R2RUnitTest" name="testTranslationRuleToDRL" time="0.14">
+  <testcase classname="eu.arcadia.expertsystem.R2RUnitTest" name="testTranslationRuleToDRL" time="0.15">
     <skipped/>
-    <system-out>01:01:17.869 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class eu.arcadia.expertsystem.R2RUnitTest]
-01:01:17.872 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-01:01:17.875 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-01:01:17.882 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [eu.arcadia.expertsystem.R2RUnitTest] from class [org.springframework.test.context.support.DefaultTestContextBootstrapper]
-01:01:17.906 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - Found explicit ContextLoader class [org.springframework.boot.test.SpringApplicationContextLoader] for context configuration attributes [ContextConfigurationAttributes@52feb982 declaringClass = &apos;eu.arcadia.expertsystem.R2RUnitTest&apos;, classes = &apos;{class eu.arcadia.expertsystem.RulesEngineApp}&apos;, locations = &apos;{}&apos;, inheritLocations = true, initializers = &apos;{}&apos;, inheritInitializers = true, name = [null], contextLoaderClass = &apos;org.springframework.boot.test.SpringApplicationContextLoader&apos;]
-01:01:17.911 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.R2RUnitTest]: class path resource [eu/arcadia/expertsystem/R2RUnitTest-context.xml] does not exist
-01:01:17.912 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.R2RUnitTest]: class path resource [eu/arcadia/expertsystem/R2RUnitTestContext.groovy] does not exist
-01:01:17.912 [main] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [eu.arcadia.expertsystem.R2RUnitTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-01:01:17.913 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an &apos;annotation declaring class&apos; for annotation type [org.springframework.test.context.ActiveProfiles] and class [eu.arcadia.expertsystem.R2RUnitTest]
-01:01:17.916 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - @TestExecutionListeners is not present for class [eu.arcadia.expertsystem.R2RUnitTest]: using defaults.
-01:01:17.921 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
-01:01:17.935 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@704921a5, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@df27fae, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@24a35978, org.springframework.test.context.support.DirtiesContextTestExecutionListener@16f7c8c1, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2f0a87b3, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@319b92f3]
-01:01:17.937 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.R2RUnitTest]
-01:01:17.938 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.R2RUnitTest]
-01:01:17.938 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.R2RUnitTest]
-01:01:17.938 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.R2RUnitTest]
+    <system-out>01:21:29.331 [main] DEBUG o.s.t.c.j.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class eu.arcadia.expertsystem.R2RUnitTest]
+01:21:29.334 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+01:21:29.337 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+01:21:29.344 [main] DEBUG o.s.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [eu.arcadia.expertsystem.R2RUnitTest] from class [org.springframework.test.context.support.DefaultTestContextBootstrapper]
+01:21:29.368 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - Found explicit ContextLoader class [org.springframework.boot.test.SpringApplicationContextLoader] for context configuration attributes [ContextConfigurationAttributes@52feb982 declaringClass = &apos;eu.arcadia.expertsystem.R2RUnitTest&apos;, classes = &apos;{class eu.arcadia.expertsystem.RulesEngineApp}&apos;, locations = &apos;{}&apos;, inheritLocations = true, initializers = &apos;{}&apos;, inheritInitializers = true, name = [null], contextLoaderClass = &apos;org.springframework.boot.test.SpringApplicationContextLoader&apos;]
+01:21:29.373 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.R2RUnitTest]: class path resource [eu/arcadia/expertsystem/R2RUnitTest-context.xml] does not exist
+01:21:29.374 [main] DEBUG o.s.t.c.s.AbstractContextLoader - Did not detect default resource location for test class [eu.arcadia.expertsystem.R2RUnitTest]: class path resource [eu/arcadia/expertsystem/R2RUnitTestContext.groovy] does not exist
+01:21:29.374 [main] INFO  o.s.t.c.s.AbstractContextLoader - Could not detect default resource locations for test class [eu.arcadia.expertsystem.R2RUnitTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+01:21:29.376 [main] DEBUG o.s.t.c.support.ActiveProfilesUtils - Could not find an &apos;annotation declaring class&apos; for annotation type [org.springframework.test.context.ActiveProfiles] and class [eu.arcadia.expertsystem.R2RUnitTest]
+01:21:29.378 [main] DEBUG o.s.t.c.s.DefaultTestContextBootstrapper - @TestExecutionListeners is not present for class [eu.arcadia.expertsystem.R2RUnitTest]: using defaults.
+01:21:29.383 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+01:21:29.397 [main] INFO  o.s.t.c.s.DefaultTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@704921a5, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@df27fae, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@24a35978, org.springframework.test.context.support.DirtiesContextTestExecutionListener@16f7c8c1, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2f0a87b3, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@319b92f3]
+01:21:29.399 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.R2RUnitTest]
+01:21:29.400 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.R2RUnitTest]
+01:21:29.400 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [eu.arcadia.expertsystem.R2RUnitTest]
+01:21:29.400 [main] DEBUG o.s.t.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [eu.arcadia.expertsystem.R2RUnitTest]
 </system-out>
   </testcase>
-  <testcase classname="eu.arcadia.expertsystem.R2RUnitTest" name="ignoredTest" time="0.14">
+  <testcase classname="eu.arcadia.expertsystem.R2RUnitTest" name="ignoredTest" time="0.15">
     <skipped/>
   </testcase>
 </testsuite>
