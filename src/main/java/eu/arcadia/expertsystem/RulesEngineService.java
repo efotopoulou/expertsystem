@@ -72,7 +72,6 @@ public class RulesEngineService {
     @Autowired
     Topic runtimeActionsTopic;
 
-
     @Autowired
     public RulesEngineService(KieUtil kieUtil) {
         logger.info("Rule Engine Session initializing...");
@@ -99,14 +98,11 @@ public class RulesEngineService {
         String factSessionName = "RulesEngineSession_" + knowledgebasename;
         kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
 
-
     }
-
 
     public KieContainer lanchKieContainerTR() {
 
         Double newversion = Double.parseDouble(releaseId.getVersion()) + 0.1;
-        //System.out.println("newversion" + newversion);
         ReleaseId releaseId2 = kieServices.newReleaseId("eu.arcadia", "expert-system", newversion.toString());
 
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
@@ -115,7 +111,6 @@ public class RulesEngineService {
 
         kieFileSystem.writeKModuleXML(kieModuleModel.toXML());
         logger.log(java.util.logging.Level.INFO, "kieModuleModel--ToXML\n{0}", kieModuleModel.toXML());
-
 
         this.loadRulesFromFile();
 
@@ -132,7 +127,6 @@ public class RulesEngineService {
 
     }
 
-
     protected void createFact(MonitoringMessageTO monitoringMessageTO) {
 
         String factKnowledgebase = "ArcadiaGSGKnowledgeBase_gsg" + monitoringMessageTO.getGsgid();
@@ -145,12 +139,9 @@ public class RulesEngineService {
         }
 
         String factSessionName = "RulesEngineSession_gsg" + monitoringMessageTO.getGsgid();
-        //System.out.println("factSessionName " + factSessionName);
         KieSession kieSession = (KieSession) kieUtil.seeThreadMap().get(factSessionName);
-        //System.out.println("thread identifier" + kieSession.getIdentifier());
 
         EntryPoint monitoringStream = kieSession.getEntryPoint("MonitoringStream");
-        //logger.info("monitoringStream "+monitoringStream.getEntryPointId() + monitoringStream.getFactCount() +monitoringStream.getObjects().size());
 
         System.out.println("Ιnsert monitoredComponent to session with nodeid " + monitoringMessageTO.getNodeid() + " metric name " + monitoringMessageTO.getMetricName() + " , value = " + monitoringMessageTO.getMetricValue() + " , and gsgid " + monitoringMessageTO.getGsgid());
         MonitoredComponent monitoredComponent = new MonitoredComponent(monitoringMessageTO.getNodeid(),
@@ -167,31 +158,31 @@ public class RulesEngineService {
 
         if (doactions.size() > 0) {
 
-                for (Action doaction : doactions) {
+            for (Action doaction : doactions) {
 
-                    logger.info("Action Ready to send it to Pub/Sub to RUNTIME_ACTIONS_TOPIC:  " + doaction.toString());
-                    jmsTemplate.setTimeToLive(1200000);
-                    jmsTemplate.send(runtimeActionsTopic, (session) -> {
+                logger.info("Action Ready to send it to Pub/Sub to RUNTIME_ACTIONS_TOPIC:  " + doaction.toString());
+                jmsTemplate.setTimeToLive(1200000);
+                jmsTemplate.send(runtimeActionsTopic, (session) -> {
 
-                        //note conf param is missing
-                        ExpertSystemMessage expertSystemMessage = new ExpertSystemMessage();
-                        expertSystemMessage.setRuleActionType(doaction.getRuleActionType());
-                        expertSystemMessage.setAction(doaction.getAction());
-                        expertSystemMessage.setGgid(doaction.getGsgid());
-                        expertSystemMessage.setValue(String.valueOf(doaction.getValue()));
+                    //note conf param is missing
+                    ExpertSystemMessage expertSystemMessage = new ExpertSystemMessage();
+                    expertSystemMessage.setRuleActionType(doaction.getRuleActionType());
+                    expertSystemMessage.setAction(doaction.getAction());
+                    expertSystemMessage.setGgid(doaction.getGsgid());
+                    expertSystemMessage.setValue(String.valueOf(doaction.getValue()));
 
-                        expertSystemMessage.setNodeid(doaction.getNodeid());
-                        expertSystemMessage.setGname("pilotTranscodingService");
+                    expertSystemMessage.setNodeid(doaction.getNodeid());
+                    expertSystemMessage.setGname("pilotTranscodingService");
 
-                        expertSystemMessage.setUsername("arcadia");
+                    expertSystemMessage.setUsername("arcadia");
 
-                        Message m = session.createObjectMessage(expertSystemMessage);
-                        m.setStringProperty("context", "runtime_action");
+                    Message m = session.createObjectMessage(expertSystemMessage);
+                    m.setStringProperty("context", "runtime_action");
 
-                        return m;
-                    });
+                    return m;
+                });
 
-                }
+            }
 
         }
     }
@@ -221,7 +212,6 @@ public class RulesEngineService {
             }
         };
         System.out.println("------New FACT----------");
-        //printFactsMessage(kieSession);
 
         List<Action> facts = new ArrayList<Action>();
 
@@ -325,9 +315,6 @@ public class RulesEngineService {
         printFactsMessage(kieSession);
 
         List<DoActionToComponent> facts = new ArrayList<DoActionToComponent>();
-//        for (FactHandle handle : kieSession.getFactHandles(doActionFilter)) {
-//            facts.add((DoActionToComponent) kieSession.getObject(handle));
-//        }
 
         for (FactHandle handle : kieSession.getEntryPoint("MonitoringStream").getFactHandles(doActionFilter)) {
             facts.add((DoActionToComponent) kieSession.getObject(handle));
@@ -401,8 +388,6 @@ public class RulesEngineService {
             //1st add default rules
             data += getRulesFromFile();
 
-            logger.info("dataaaaaaa" + data);
-
             Files.createDirectories(policyPackagePath);
             FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
             out.write(data.getBytes());
@@ -418,10 +403,9 @@ public class RulesEngineService {
 
         String ret = "";
         try {
-            
+
             InputStream inputstream = this.getClass().getResourceAsStream("/rules/gsgpilotTranscodingService/gsgpilotTranscodingService.drl");
             ret = IOUtils.toString(inputstream, "UTF-8");
-            logger.info("ret"+ret);
 
         } //EoM  
         catch (IOException ex) {
