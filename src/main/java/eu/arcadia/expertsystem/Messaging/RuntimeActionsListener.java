@@ -56,7 +56,6 @@ public class RuntimeActionsListener {
             addTranscondingWorkers(message);
         }
 
-        //Activity activity = (Activity) activityManagement.findActivity(message.getNodeid(), message.getGname(), activityDescription, "POLICY");
         logger.info(activityDescription);
     }
 

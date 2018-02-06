@@ -1,7 +1,6 @@
 package eu.arcadia.expertsystem;
 
 import eu.arcadia.expertsystem.config.DroolsConfig;
-import eu.arcadia.expertsystem.config.Neo4jConfiguration;
 
 import java.util.Arrays;
 import javax.jms.ConnectionFactory;
@@ -18,7 +17,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
@@ -30,22 +28,14 @@ import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
  */
 @ComponentScan({
     //Contains all the security configuration regarding the Arcadia Framework 
-    //"eu.arcadia.app.config",
-    //"eu.arcadia.app.security.auth",
-    //"eu.arcadia.api.repository",
-    //"eu.arcadia.repository.solr",
-    "eu.arcadia.repository.mongo.service",
-    "eu.arcadia.repository.mongo.transferobjects",
     "eu.arcadia.expertsystem",
     "eu.arcadia.expertsystem.rules",
-    "eu.arcadia.repository.neo4j.service",
-    "eu.arcadia.repository.neo4j.dao",
     "rules"
 }
 )
 //Import component specific configurations
-@Import({DroolsConfig.class, Neo4jConfiguration.class})
-@EnableMongoRepositories("eu.arcadia.repository.mongo.dao")
+@Import({DroolsConfig.class})
+//@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableJms
 public class RulesEngineApp {
@@ -64,13 +54,6 @@ public class RulesEngineApp {
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
-
-//        StringBuilder sb = new StringBuilder("Application beans:\n");
-//        for (String beanName : beanNames) {
-//            sb.append(beanName + "\n");
-//        }
-//        log.info(sb.toString());
-
     }
 
     @Bean // Strictly speaking this bean is not necessary as boot creates a default

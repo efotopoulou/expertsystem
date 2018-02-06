@@ -66,9 +66,9 @@ public class RulesEngineService {
     private static final Logger logger = Logger.getLogger(RulesEngineService.class.getName());
 
     private static final String rulesPackage = "rules";
-    private static final String rulesPath = "src/main/resources/rules";
+    //private static final String rulesPath = "src/main/resources/rules";
 
-    private static final String FACTS_EXPIRATION = "5m";
+    //private static final String FACTS_EXPIRATION = "5m";
 
     ReleaseId releaseId = KieServices.Factory.get().newReleaseId("eu.arcadia", "expert-system", "1.0");
 
@@ -76,15 +76,8 @@ public class RulesEngineService {
     private final KieFileSystem kieFileSystem;
     private final KieModuleModel kieModuleModel;
 
-    //private KieUtil kieUtil;
     @Autowired
     KieContainer kieContainer;
-
-//    @Autowired
-//    IPolicyManagement policymanagement;
-
-//    @Autowired
-//    IGroundedServiceGraphManagement groundedServiceGraphManagement;
 
     private final KieUtil kieUtil;
 
@@ -94,10 +87,6 @@ public class RulesEngineService {
     @Autowired
     Topic runtimeActionsTopic;
 
-    private Object packageDescr;
-
-//    @Value("${rules.path}")
-//    private String rulespath;
 
     @Autowired
     public RulesEngineService(KieUtil kieUtil) {
@@ -114,26 +103,6 @@ public class RulesEngineService {
     /*
      Add a new knowledge base & session & corresponding rules so as to update kieModule
      */
-//    public void addKnowledgebasePerGroundedGraph(GroundedServicegraph groundedServicegraph) {
-//
-//        String knowledgebasename = "gsg" + groundedServicegraph.getId();
-//
-//        System.out.println("knowledgebasename" + knowledgebasename);
-//        KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setDefault(true)
-//                .setEventProcessingMode(EventProcessingOption.STREAM);
-//
-//        //KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setEventProcessingMode(EventProcessingOption.STREAM);
-//        kieBaseModel1.addPackage(rulesPackage + "." + knowledgebasename);
-//
-//        String factSessionName = "RulesEngineSession_" + knowledgebasename;
-//        kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
-//        //to check
-//        //.setType(KieSessionModel.KieSessionType.STATEFUL);
-//
-//    }
-    /*
-     Add a new knowledge base & session & corresponding rules so as to update kieModule
-     */
     public void addKnowledgebasePerGroundedGraphTR() {
 
         String knowledgebasename = "gsgpilotTranscodingService";
@@ -142,13 +111,11 @@ public class RulesEngineService {
         KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setDefault(true)
                 .setEventProcessingMode(EventProcessingOption.STREAM);
 
-        //KieBaseModel kieBaseModel1 = kieModuleModel.newKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename).setEventProcessingMode(EventProcessingOption.STREAM);
         kieBaseModel1.addPackage(rulesPackage + "." + knowledgebasename);
 
         String factSessionName = "RulesEngineSession_" + knowledgebasename;
         kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
-        //to check
-        //.setType(KieSessionModel.KieSessionType.STATEFUL);
+
 
     }
 
@@ -262,12 +229,6 @@ public class RulesEngineService {
 
         if (doactions.size() > 0) {
 
-            //try {
-                //GroundedServicegraph gsg = (GroundedServicegraph) groundedServiceGraphManagement.getGroundedServicegraph(gsgid);
-                //String gsgPropietary = gsg.getUsername();
-
-                //String servicegraphname = gsg.getServicegraph().getName();
-
                 for (Action doaction : doactions) {
 
                     logger.info("Action Ready to send it to Pub/Sub to RUNTIME_ACTIONS_TOPIC:  " + doaction.toString());
@@ -293,9 +254,6 @@ public class RulesEngineService {
                     });
 
                 }
-//            } catch (NotExistingGroundedServiceGraphException ex) {
-//                Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//            }
 
         }
     }
@@ -463,20 +421,12 @@ public class RulesEngineService {
             return null;
         }
 
-//        KieSession kieSession = kieContainer.newKieSession(factSession);
-//
-//        EntryPoint monitoringStream = kieSession.getEntryPoint("MonitoringStream");
-//        monitoringStream.insert(monitoredComponent);
-//        //kieSession.insert(monitoredComponent);
-//        kieSession.fireAllRules();
         KieSession kieSession = (KieSession) kieUtil.seeThreadMap().get(factSessionName);
 
         System.out.println("kiesessin info" + kieSession.getEntryPointId());
 
         EntryPoint monitoringStream = kieSession.getEntryPoint("MonitoringStream");
 
-//        KieSession a = (KieSession) kieUtil.seeThreadMap().get(factSessionName);
-//        System.out.println("thread identifier"+a.getIdentifier());
         monitoringStream.insert(monitoredComponent);
 
         DoActionToComponent doaction = findDoAction(kieSession);
