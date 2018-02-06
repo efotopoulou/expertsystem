@@ -10,16 +10,16 @@ declare  MonitoredComponent
 end
 
 
-rule "5a0ae56c4f0c038e6475d038"
+rule "highTranscodingRateRule"
 when
     (
-    $tot0 := java.lang.Double( $tot0 >=1 ) from accumulate(     
-    $m0 := MonitoredComponent( name== "3d020fef-cd87" && metric== "transcondingRate" ) over window:time(1m)from entry-point "MonitoringStream" ,
+    $tot0 := java.lang.Double( $tot0 >=150 ) from accumulate(     
+    $m0 := MonitoredComponent( name== "transcodingNode" && metric== "transcondingRate" ) over window:time(1m)from entry-point "MonitoringStream" ,
         average( $m0.getValue() )  ) and
-    $tot1 := java.lang.Double( $tot1 >=100 ) from accumulate(     
-    $m1 := MonitoredComponent( name== "3d020fef-cd87" && metric== "queueSize" ) over window:time(1m)from entry-point "MonitoringStream" ,
+    $tot1 := java.lang.Double( $tot1 >=3 ) from accumulate(     
+    $m1 := MonitoredComponent( name== "transcodingNode" && metric== "queueSize" ) over window:time(1m)from entry-point "MonitoringStream" ,
         average( $m1.getValue() )  ) ) 
 then
-    insertLogical( new Action("5a0ae58d4f0c038e6475d049","3d020fef-cd87",RuleActionType.COMPONENT_LIFECYCLE_MANAGEMENT,"2","infrastracture-start")); 
+    insertLogical( new Action("pilotTranscodingService","transcodingNode",RuleActionType.COMPONENT_LIFECYCLE_MANAGEMENT,"2","infrastracture-start")); 
 
 end

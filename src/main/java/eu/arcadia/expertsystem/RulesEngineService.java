@@ -154,7 +154,7 @@ public class RulesEngineService {
 
         List<Action> doactions = findAction(kieSession);
 
-        String gsgid = monitoringMessageTO.getGsgid();
+        //String gsgid = monitoringMessageTO.getGsgid();
 
         if (doactions.size() > 0) {
 
@@ -387,6 +387,8 @@ public class RulesEngineService {
             String data = "";
             //1st add default rules
             data += getRulesFromFile();
+            
+            logger.info("rules : "+data);
 
             Files.createDirectories(policyPackagePath);
             FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
