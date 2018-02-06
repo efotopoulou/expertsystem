@@ -9,7 +9,6 @@
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/facts/Action.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/config/DroolsConfig.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/rules/generation/ThreadsGroupFactory.java
-/home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/rules/generation/RuleUtil.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/RulesEngineApp.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/rules/generation/KieUtil.java
 /home/eleni/NetBeansProjects/expertsystem/src/main/java/eu/arcadia/expertsystem/Messaging/RuntimeActionsListener.java

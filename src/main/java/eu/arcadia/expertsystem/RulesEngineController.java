@@ -26,8 +26,6 @@ public class RulesEngineController {
     @RequestMapping(value = "/newMonitoringMessage", method = RequestMethod.POST)
     public boolean newMonitoringMessage(@RequestBody MonitoringMessageTO tobject) {
 
-        tobject.setNodeid("3d020fef-cd87");
-
         rulesEngineService.createFact(tobject);
 
         return true;

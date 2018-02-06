@@ -54,12 +54,7 @@ import org.springframework.jms.core.JmsTemplate;
 public class RulesEngineService {
 
     private static final Logger logger = Logger.getLogger(RulesEngineService.class.getName());
-
     private static final String rulesPackage = "rules";
-    //private static final String rulesPath = "src/main/resources/rules";
-
-    //private static final String FACTS_EXPIRATION = "5m";
-
     ReleaseId releaseId = KieServices.Factory.get().newReleaseId("eu.arcadia", "expert-system", "1.0");
 
     private final KieServices kieServices;
@@ -81,8 +76,6 @@ public class RulesEngineService {
     @Autowired
     public RulesEngineService(KieUtil kieUtil) {
         logger.info("Rule Engine Session initializing...");
-        //policymanagement = pm;
-        //groundedServiceGraphManagement = gsgm;
         this.kieServices = KieServices.Factory.get();
         this.kieFileSystem = kieServices.newKieFileSystem();
         this.kieModuleModel = kieServices.newKieModuleModel();
@@ -106,50 +99,6 @@ public class RulesEngineService {
         String factSessionName = "RulesEngineSession_" + knowledgebasename;
         kieBaseModel1.newKieSessionModel(factSessionName).setClockType(ClockTypeOption.get("realtime"));
 
-
-    }
-
-    /*
-     Remove a new knowledge base & session & corresponding rules so as to update kieModule
-     */
-    public void removeKnowledgebase(String groundedServicegraphid, String policyid) {
-        try {
-
-            Collection<String> kiebases = kieContainer.getKieBaseNames();
-            String factKnowledgebase = "ArcadiaGSGKnowledgeBase_gsg" + groundedServicegraphid;
-
-            if (!kiebases.contains(factKnowledgebase)) {
-                logger.log(java.util.logging.Level.WARNING, "Knowledge base {0} already removed", factKnowledgebase);
-                return;
-            }
-
-            String knowledgebasename = "gsg" + groundedServicegraphid;
-            kieModuleModel.removeKieBaseModel("ArcadiaGSGKnowledgeBase_" + knowledgebasename);
-            kieFileSystem.writeKModuleXML(kieModuleModel.toXML());
-            logger.log(java.util.logging.Level.INFO, "kieModuleModel--ToXML\n{0}", kieModuleModel.toXML());
-
-            //TODO remove policy rules
-            String current_dir = System.getProperty("user.dir");
-            FileUtils.deleteDirectory(new File(current_dir + "/rules" + "/" + knowledgebasename));
-            //delete session
-            String factSessionName = "RulesEngineSession_gsg" + groundedServicegraphid;
-            kieUtil.haltKieSession(factSessionName);
-
-            Double newversion = Double.parseDouble(releaseId.getVersion()) + 0.1;
-            ReleaseId releaseId2 = kieServices.newReleaseId("eu.arcadia", "expert-system", newversion.toString());
-            KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
-            kieBuilder.buildAll();
-
-            if (kieBuilder.getResults()
-                    .hasMessages(Level.ERROR)) {
-                throw new RuntimeException("Build Errors:\n" + kieBuilder.getResults().toString());
-            }
-
-            kieContainer = kieServices.newKieContainer(releaseId2);
-
-        } catch (IOException ex) {
-            Logger.getLogger(RulesEngineService.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
 
     }
 
@@ -186,7 +135,6 @@ public class RulesEngineService {
 
     protected void createFact(MonitoringMessageTO monitoringMessageTO) {
 
-        //logger.info("i have a new monitoring message" + monitoringMessageTO.toString());
         String factKnowledgebase = "ArcadiaGSGKnowledgeBase_gsg" + monitoringMessageTO.getGsgid();
 
         Collection<String> kiebases = kieContainer.getKieBaseNames();
