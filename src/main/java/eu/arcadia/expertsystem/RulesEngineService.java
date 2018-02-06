@@ -6,24 +6,14 @@
 package eu.arcadia.expertsystem;
 
 import com.google.common.io.Resources;
-//import eu.arcadia.api.repository.IGroundedServiceGraphManagement;
-//import eu.arcadia.api.repository.IPolicyManagement;
-//import eu.arcadia.api.repository.exception.NotExistingGroundedServiceGraphException;
 import eu.arcadia.expertsystem.facts.RuleActionType;
 import eu.arcadia.expertsystem.Messaging.ExpertSystemMessage;
 import static eu.arcadia.expertsystem.config.DroolsConfig.RULESPACKAGE;
 import eu.arcadia.expertsystem.facts.Action;
 import eu.arcadia.expertsystem.facts.DoActionToComponent;
 import eu.arcadia.expertsystem.facts.MonitoredComponent;
-
 import eu.arcadia.expertsystem.rules.generation.KieUtil;
 import eu.arcadia.expertsystem.transferobjects.MonitoringMessageTO;
-//import eu.arcadia.repository.mongo.transferobjects.MonitoringMessageTO;
-//import eu.arcadia.repository.mongo.transferobjects.MonitoringMessageTO;
-///import eu.arcadia.repository.mongo.domain.GroundedServicegraph;
-//import eu.arcadia.repository.mongo.domain.RuleExpression;
-//import eu.arcadia.repository.mongo.transferobjects.MonitoringMessageTO;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

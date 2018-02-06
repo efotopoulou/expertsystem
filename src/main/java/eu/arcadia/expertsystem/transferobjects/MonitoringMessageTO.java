@@ -5,9 +5,9 @@
  */
 package eu.arcadia.expertsystem.transferobjects;
 
-import eu.arcadia.model.enums.MetricValueTypes;
-import eu.arcadia.model.enums.MonitoringTypes;
 
+import eu.arcadia.expertsystem.enums.MetricValueTypes;
+import eu.arcadia.expertsystem.enums.MonitoringTypes;
 import java.io.Serializable;
 import java.util.Date;
 

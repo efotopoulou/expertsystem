@@ -1,7 +1,6 @@
 package eu.arcadia.expertsystem;
 
 import eu.arcadia.expertsystem.transferobjects.MonitoringMessageTO;
-import eu.arcadia.repository.mongo.transferobjects.SGLifecycleMessageTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,16 +29,6 @@ public class RulesEngineController {
         tobject.setNodeid("3d020fef-cd87");
 
         rulesEngineService.createFact(tobject);
-
-        return true;
-
-    }
-
-    @RequestMapping(value = "/removeKnowledgebase", method = RequestMethod.POST)
-    public boolean removeKnowledgebase(@RequestBody SGLifecycleMessageTO tobject) {
-
-        log.info("Rest remove addKnowledgebase" + tobject.getGsgid());
-        rulesEngineService.removeKnowledgebase(tobject.getGsgid(), tobject.getPolicyid());
 
         return true;
 
