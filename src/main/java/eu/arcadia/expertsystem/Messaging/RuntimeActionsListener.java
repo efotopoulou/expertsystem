@@ -65,7 +65,7 @@ public class RuntimeActionsListener {
         ResponseEntity<String> response = null;
         if (message.getAction().contains("start")) {
             response = restTemplate.getForEntity(TRANSCODING_SERVER_URL + "/infrastructure/start/" + message.getValue(), String.class);
-        } else if (message.getAction().contains("start")) {
+        } else if (message.getAction().contains("stop")) {
             response = restTemplate.getForEntity(TRANSCODING_SERVER_URL + "/infrastructure/stop/" + message.getValue(), String.class);
         }
 

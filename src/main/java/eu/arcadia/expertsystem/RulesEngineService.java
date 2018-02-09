@@ -49,6 +49,7 @@ import org.kie.api.runtime.conf.ClockTypeOption;
 import org.kie.api.runtime.rule.EntryPoint;
 import org.kie.internal.io.ResourceFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Service
 public class RulesEngineService {
@@ -79,6 +80,47 @@ public class RulesEngineService {
         this.kieFileSystem = kieServices.newKieFileSystem();
         this.kieModuleModel = kieServices.newKieModuleModel();
         this.kieUtil = kieUtil;
+
+    }
+
+    //fireAllRules every 5 minutes 1min== 60000
+    @Scheduled(fixedRate = 300000)
+    public void fireAllRulesOfRecommendationEngine() {
+
+        String factSessionName = "RulesEngineSession_gsgpilotTranscodingService";
+        KieSession kieSession = (KieSession) kieUtil.seeThreadMap().get(factSessionName);
+
+        List<Action> doactions = findAction(kieSession);
+
+        if (doactions.size() > 0) {
+
+            for (Action doaction : doactions) {
+
+                logger.info("Action Ready to send it to Pub/Sub to RUNTIME_ACTIONS_TOPIC:  " + doaction.toString());
+                jmsTemplate.setTimeToLive(1200000);
+                jmsTemplate.send(runtimeActionsTopic, (session) -> {
+
+                    //note conf param is missing
+                    ExpertSystemMessage expertSystemMessage = new ExpertSystemMessage();
+                    expertSystemMessage.setRuleActionType(doaction.getRuleActionType());
+                    expertSystemMessage.setAction(doaction.getAction());
+                    expertSystemMessage.setGgid(doaction.getGsgid());
+                    expertSystemMessage.setValue(String.valueOf(doaction.getValue()));
+
+                    expertSystemMessage.setNodeid(doaction.getNodeid());
+                    expertSystemMessage.setGname("pilotTranscodingService");
+
+                    expertSystemMessage.setUsername("arcadia");
+
+                    Message m = session.createObjectMessage(expertSystemMessage);
+                    m.setStringProperty("context", "runtime_action");
+
+                    return m;
+                });
+
+            }
+
+        }
 
     }
 
@@ -152,39 +194,6 @@ public class RulesEngineService {
         monitoringStream.insert(monitoredComponent);
         //kieSession.insert(monitoredComponent);
 
-        List<Action> doactions = findAction(kieSession);
-
-        //String gsgid = monitoringMessageTO.getGsgid();
-
-        if (doactions.size() > 0) {
-
-            for (Action doaction : doactions) {
-
-                logger.info("Action Ready to send it to Pub/Sub to RUNTIME_ACTIONS_TOPIC:  " + doaction.toString());
-                jmsTemplate.setTimeToLive(1200000);
-                jmsTemplate.send(runtimeActionsTopic, (session) -> {
-
-                    //note conf param is missing
-                    ExpertSystemMessage expertSystemMessage = new ExpertSystemMessage();
-                    expertSystemMessage.setRuleActionType(doaction.getRuleActionType());
-                    expertSystemMessage.setAction(doaction.getAction());
-                    expertSystemMessage.setGgid(doaction.getGsgid());
-                    expertSystemMessage.setValue(String.valueOf(doaction.getValue()));
-
-                    expertSystemMessage.setNodeid(doaction.getNodeid());
-                    expertSystemMessage.setGname("pilotTranscodingService");
-
-                    expertSystemMessage.setUsername("arcadia");
-
-                    Message m = session.createObjectMessage(expertSystemMessage);
-                    m.setStringProperty("context", "runtime_action");
-
-                    return m;
-                });
-
-            }
-
-        }
     }
 
     /**
@@ -250,16 +259,16 @@ public class RulesEngineService {
 
     }
 
-    private Resource getResource(KieServices kieServices, String resourcePath) {
-        try {
-            InputStream is = Resources.getResource(resourcePath).openStream(); //guava
-            return kieServices.getResources()
-                    .newInputStreamResource(is)
-                    .setResourceType(ResourceType.DRL);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load drools resource file.", e);
-        }
-    }
+//    private Resource getResource(KieServices kieServices, String resourcePath) {
+//        try {
+//            InputStream is = Resources.getResource(resourcePath).openStream(); //guava
+//            return kieServices.getResources()
+//                    .newInputStreamResource(is)
+//                    .setResourceType(ResourceType.DRL);
+//        } catch (IOException e) {
+//            throw new RuntimeException("Failed to load drools resource file.", e);
+//        }
+//    }
 
     public String mapActionType(String actionType) {
         String enumedActionType;
@@ -387,8 +396,8 @@ public class RulesEngineService {
             String data = "";
             //1st add default rules
             data += getRulesFromFile();
-            
-            logger.info("rules : "+data);
+
+            logger.info("rules : " + data);
 
             Files.createDirectories(policyPackagePath);
             FileOutputStream out = new FileOutputStream(current_dir + "/" + drlPath4deployment);
